@@ -8,11 +8,14 @@ rollover, and opens into a soundtracked interactive experience.
 5,000.2 km. The number is computed from the coordinates in `config.ts`, so it
 can never drift out of sync with the map.)
 
+**Live:** <https://for-you-cutieee.pages.dev>
+
 ```
 npm install
 npm run dev      # http://localhost:5173 — also served on your LAN for phone testing
 npm run build    # → dist/
 npm run preview  # serve the production build locally
+npm run deploy   # build + push live to Cloudflare Pages
 ```
 
 ---
@@ -144,6 +147,45 @@ you ship before you've picked the photos.
 
 ---
 
+## Deploying
+
+The site is on **Cloudflare Pages**, deployed by direct upload — your source
+never leaves your machine, so her letter, photos and voice note are not on
+GitHub or anywhere else public. Only the built `dist/` folder is uploaded.
+
+```
+npm run deploy
+```
+
+That builds and pushes live to <https://for-you-cutieee.pages.dev>. It takes
+about ten seconds. Run it again any time you change the letter, swap a photo, or
+re-record the voice note.
+
+If your Cloudflare login ever expires, `npx wrangler login` re-authorises it in
+the browser.
+
+### One thing to know about the preview key
+
+`PREVIEW_KEY` is checked in the browser, which means it ships inside the
+JavaScript bundle — anyone who opens devtools and reads the source can find it.
+It reliably stops her from *stumbling* into the surprise, which is all it needs
+to do. Don't reuse a password you care about.
+
+### If you ever want GitHub Pages instead
+
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) is ready to go:
+push to a GitHub repo, turn on Pages → "GitHub Actions" in the repo settings, and
+every push to `main` redeploys. It works out the `/<repo>/` base path on its own.
+Be aware that Pages from a **private** repo needs GitHub Pro — on a free account
+the repo (and the letter in it) would have to be public.
+
+### Custom domain
+
+Cloudflare Pages → your project → Custom domains, if you'd rather send her
+something that isn't a `.pages.dev` link.
+
+---
+
 ## How it's put together
 
 **Vite + React 19 + TypeScript, Tailwind v4, Framer Motion, canvas-confetti,
@@ -217,8 +259,8 @@ motion.
 out. It works on Android Chrome; **iOS Safari has no vibration API**, so the
 buzz is silently absent there. Everything else behaves identically.
 
-### Deploying
+### A note on HTTPS
 
-`npm run build` and upload `dist/`. Serve it over **HTTPS** — the microphone
-and the clipboard both require a secure origin, so the candles won't listen on
-a plain `http://` link.
+The microphone and the clipboard both require a secure origin. Cloudflare Pages
+serves everything over HTTPS, so the candles listen correctly on the live site —
+but they will not on a plain `http://` link or a raw IP address.
