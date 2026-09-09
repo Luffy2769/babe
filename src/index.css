@@ -1,0 +1,198 @@
+@import 'tailwindcss';
+
+/* ────────────────────────────────────────────────────────────
+   Design tokens — dark obsidian ground, neon crimson accents.
+   ──────────────────────────────────────────────────────────── */
+@theme {
+  --color-obsidian: #0a0a0c;
+  --color-charcoal: #121216;
+  --color-crimson: #ff1a1a;
+  --color-blood: #ff2d55;
+  --color-ember: #ff6b3d;
+  --color-gold: #ffc93c;
+
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --animate-flicker: flicker 2.4s ease-in-out infinite;
+  --animate-spin-slow: spin 4s linear infinite;
+  --animate-scan: scan 7s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.6s ease-out infinite;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scaleY(1) translateX(0);
+  }
+  25% {
+    opacity: 0.82;
+    transform: scaleY(1.08) translateX(-0.4px);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scaleY(0.94) translateX(0.5px);
+  }
+  75% {
+    opacity: 0.78;
+    transform: scaleY(1.05) translateX(-0.3px);
+  }
+}
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   Base
+   ──────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-obsidian);
+    color: #e8e8ec;
+    font-family: var(--font-display);
+    overflow-x: hidden;
+    /* keeps the ground from banding on OLED phones */
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, rgba(255, 26, 26, 0.09), transparent 60%),
+      radial-gradient(90% 60% at 50% 110%, rgba(255, 45, 85, 0.07), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* iOS: keep content clear of the notch and the home indicator */
+  #root {
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  ::selection {
+    background: rgba(255, 26, 26, 0.35);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 26, 26, 0.3);
+    border-radius: 99px;
+  }
+
+  button {
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   Reusable component classes
+   ──────────────────────────────────────────────────────────── */
+@layer components {
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-md;
+  }
+
+  .glass-strong {
+    @apply border border-white/15 bg-white/8 backdrop-blur-xl;
+  }
+
+  .hud-label {
+    @apply font-mono text-[10px] tracking-[0.28em] text-white/40 uppercase sm:text-[11px];
+  }
+
+  .neon-text {
+    color: #fff;
+    text-shadow:
+      0 0 6px rgba(255, 26, 26, 0.85),
+      0 0 22px rgba(255, 26, 26, 0.45),
+      0 0 48px rgba(255, 45, 85, 0.28);
+  }
+
+  .neon-edge {
+    box-shadow:
+      0 0 0 1px rgba(255, 26, 26, 0.35),
+      0 0 24px -4px rgba(255, 26, 26, 0.55),
+      inset 0 0 26px -14px rgba(255, 45, 85, 0.9);
+  }
+
+  /* the grain + scanline film that sits over the whole app */
+  .film-grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.6) 0px,
+      rgba(255, 255, 255, 0.6) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Respect the OS "reduce motion" switch — kills the ambient loops but keeps
+   the app fully usable. Framer Motion transitions are damped in code. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
