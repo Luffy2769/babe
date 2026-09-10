@@ -4,6 +4,8 @@ import { PreviewBadge } from './components/PreviewBadge'
 import { BootGate } from './components/BootGate'
 import { TimeLockGate } from './components/TimeLockGate'
 import { UnlockedExperience } from './components/UnlockedExperience'
+import { ParticlesLayer } from './components/ParticlesLayer'
+import { CursorGlow } from './components/ui/CursorGlow'
 import { AudioProvider } from './hooks/useAudioEngine'
 import { midnightBurst, wishBurst } from './lib/celebrate'
 import { now, readPreview, syncClock } from './lib/time'
@@ -87,6 +89,8 @@ function Experience() {
 
   return (
     <div className="film-grain relative min-h-[100dvh]">
+      <CursorGlow />
+      <ParticlesLayer />
       <AudioPlayer />
 
       {!booted && <BootGate onDone={() => setBooted(true)} />}

@@ -153,6 +153,44 @@
       inset 0 0 26px -14px rgba(255, 45, 85, 0.9);
   }
 
+  /* holographic foil sheen for vouchers and special cards */
+  .holographic-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 26, 26, 0.08) 50%, rgba(255, 201, 60, 0.07) 100%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .holographic-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      115deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 30%,
+      rgba(255, 45, 85, 0.15) 45%,
+      rgba(255, 201, 60, 0.18) 50%,
+      rgba(0, 255, 255, 0.1) 55%,
+      transparent 70%
+    );
+    background-size: 200% 200%;
+    opacity: 0.65;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .holographic-card:hover::before {
+    opacity: 0.95;
+    animation: holo-shimmer 3.5s ease infinite;
+  }
+
+  @keyframes holo-shimmer {
+    0% { background-position: 100% 100%; }
+    50% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
   /* the grain + scanline film that sits over the whole app */
   .film-grain::after {
     content: '';

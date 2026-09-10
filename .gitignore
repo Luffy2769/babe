@@ -25,3 +25,7 @@ dist-ssr
 
 # wrangler local cache
 .wrangler
+
+# python cache
+__pycache__/
+*.py[cod]
