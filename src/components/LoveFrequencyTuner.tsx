@@ -72,10 +72,10 @@ export function LoveFrequencyTuner() {
   return (
     <section className="mx-auto w-full max-w-lg px-5 py-14">
       <SectionHeading
-        index="04"
-        eyebrow="telemetry tuner"
-        title="Frequencies of Us."
-        sub="Tune across our private broadcast channels. Built to bridge any distance."
+        index="03"
+        eyebrow="something silly"
+        title="Frequencies of us."
+        sub="A station that only plays for you. Tap the channels."
       />
 
       <div className="glass relative overflow-hidden rounded-2xl p-5 sm:p-6 border-white/10">
@@ -86,20 +86,20 @@ export function LoveFrequencyTuner() {
           <div className="flex items-center gap-2">
             <Radio size={16} className="animate-pulse text-crimson" />
             <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-white uppercase">
-              LOVE_RADIO // 16.09
+              our station
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full animate-ping" style={{ backgroundColor: current.color }} />
             <span className="font-mono text-[10px] tracking-widest uppercase text-white/50">
-              TUNED IN
+              on air
             </span>
           </div>
         </div>
 
         {/* Frequency Dial Display */}
         <div className="my-5 rounded-xl border border-white/10 bg-black/40 p-4 text-center">
-          <p className="hud-label text-[10px] text-white/40 mb-1">TUNED FREQUENCY</p>
+          <p className="hud-label text-[10px] text-white/40 mb-1">tuned to</p>
           <motion.p
             key={current.freq}
             initial={{ opacity: 0, y: -4 }}
@@ -159,7 +159,7 @@ export function LoveFrequencyTuner() {
           <div className="flex items-center gap-1">
             <Volume2 size={12} className="text-white/30" />
             <span className="font-mono text-[9px] tracking-wider text-white/30 uppercase">
-              SIGNAL CARRIER
+              signal strength
             </span>
           </div>
           <div className="flex items-center gap-1" aria-hidden>

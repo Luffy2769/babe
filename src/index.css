@@ -10,6 +10,11 @@
   --color-blood: #ff2d55;
   --color-ember: #ff6b3d;
   --color-gold: #ffc93c;
+  /* the warm end of the range — keeps the page from reading as a warning light */
+  --color-rose: #ff8fa3;
+  --color-blush: #ffd0d8;
+  --color-plum: #2a1030;
+  --color-wine: #4a0f24;
 
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -86,8 +91,10 @@
     overflow-x: hidden;
     /* keeps the ground from banding on OLED phones */
     background-image:
-      radial-gradient(120% 80% at 50% -10%, rgba(255, 26, 26, 0.09), transparent 60%),
-      radial-gradient(90% 60% at 50% 110%, rgba(255, 45, 85, 0.07), transparent 60%);
+      radial-gradient(120% 80% at 50% -10%, rgba(255, 45, 85, 0.13), transparent 62%),
+      radial-gradient(80% 50% at 15% 35%, rgba(74, 15, 36, 0.35), transparent 60%),
+      radial-gradient(70% 45% at 88% 68%, rgba(42, 16, 48, 0.4), transparent 62%),
+      radial-gradient(90% 60% at 50% 110%, rgba(255, 143, 163, 0.08), transparent 60%);
     background-attachment: fixed;
   }
 
@@ -135,15 +142,33 @@
   }
 
   .hud-label {
-    @apply font-mono text-[10px] tracking-[0.28em] text-white/40 uppercase sm:text-[11px];
+    @apply font-display text-[11px] font-medium tracking-[0.18em] text-white/45 uppercase sm:text-[12px];
+  }
+
+  /* for the few places a readout genuinely suits the moment */
+  .mono-label {
+    @apply font-mono text-[10px] tracking-[0.22em] text-white/35 uppercase;
+  }
+
+  .serif-quote {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
   }
 
   .neon-text {
     color: #fff;
     text-shadow:
-      0 0 6px rgba(255, 26, 26, 0.85),
-      0 0 22px rgba(255, 26, 26, 0.45),
-      0 0 48px rgba(255, 45, 85, 0.28);
+      0 0 6px rgba(255, 45, 85, 0.8),
+      0 0 22px rgba(255, 45, 85, 0.42),
+      0 0 52px rgba(255, 143, 163, 0.3);
+  }
+
+  /* warm glow for the softer headings */
+  .warm-text {
+    background: linear-gradient(120deg, #ffd0d8 0%, #ff8fa3 45%, #ffc93c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .neon-edge {

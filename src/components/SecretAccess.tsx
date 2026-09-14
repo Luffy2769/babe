@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { KeyRound, Lock, ShieldCheck, Signal } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { PREVIEW_KEY } from '../config'
+import { COPY, PREVIEW_KEY } from '../config'
 import { buzz } from '../lib/celebrate'
 
 const HOLD_MS = 1200
@@ -76,17 +76,17 @@ export function SecretAccess({
         className="glass flex cursor-default items-center gap-2.5 rounded-full py-2 pr-4 pl-3 select-none"
         style={{ WebkitTouchCallout: 'none' }}
       >
-        <Lock size={12} className="text-crimson" />
-        <span className="font-mono text-[10px] tracking-[0.22em] text-white/50 uppercase">
-          channel locked
+        <Lock size={12} className="text-rose" />
+        <span className="font-display text-[12px] tracking-[0.14em] text-white/60 lowercase">
+          {COPY.lockedChip}
         </span>
         <span className="h-3 w-px bg-white/15" />
         <span
-          className="flex items-center gap-1 font-mono text-[10px] tracking-[0.15em] text-white/30 uppercase"
-          title={verified ? 'Countdown verified against server time' : 'Using this device clock'}
+          className="flex items-center gap-1 font-display text-[11px] tracking-[0.1em] text-white/35 lowercase"
+          title={verified ? 'Countdown checked against server time' : 'Using this device clock'}
         >
           {verified ? <ShieldCheck size={11} /> : <Signal size={11} />}
-          {verified ? 'synced' : 'local'}
+          {verified ? COPY.clockChecked : COPY.clockLocal}
         </span>
       </motion.div>
 

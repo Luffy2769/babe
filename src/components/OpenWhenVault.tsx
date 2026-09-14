@@ -277,7 +277,7 @@ export function OpenWhenVault() {
   return (
     <section className="mx-auto w-full max-w-lg px-5 py-16">
       <SectionHeading
-        index="03"
+        index="04"
         eyebrow="open when…"
         title={
           <>

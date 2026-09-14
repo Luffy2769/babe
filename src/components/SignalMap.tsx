@@ -166,22 +166,22 @@ export function SignalMap() {
     <section className="mx-auto w-full max-w-lg px-5 py-16">
       <SectionHeading
         index="01"
-        eyebrow="signal path"
+        eyebrow="the distance"
         title={
           <>
             <span
               onClick={() => setTelemetryOpen(true)}
-              title="Double click for secret telemetry"
+              title="Tap for something hidden"
               className="group inline-flex cursor-pointer items-center gap-2 transition-colors hover:text-crimson"
             >
               {DISTANCE_KM.toLocaleString()} km
               <Activity size={18} className="text-crimson/70 group-hover:scale-125 transition-transform" />
             </span>
             <br />
-            <span className="text-white/40">and no latency that matters.</span>
+            <span className="warm-text">and none of it matters.</span>
           </>
         }
-        sub="Send one and watch it cross. Your phone will feel it land."
+        sub="Send me something across it. Your phone will buzz the moment it lands on her side."
       />
 
       <div className="glass relative overflow-hidden rounded-2xl">
@@ -348,7 +348,7 @@ export function SignalMap() {
           <div className="flex items-center gap-2">
             <Radio size={12} className={flying ? 'text-crimson animate-pulse' : 'text-white/40'} />
             <span className="font-mono text-[10px] tracking-[0.18em] text-white/40 uppercase">
-              {flying ? 'packet traversing ocean…' : arrived ? 'delivered to her node ✓' : 'carrier link idle'}
+              {flying ? 'crossing the ocean…' : arrived ? 'she got it' : 'tap to send one'}
             </span>
           </div>
           <button
@@ -367,7 +367,7 @@ export function SignalMap() {
         </NeonButton>
 
         <p className="font-mono text-[9px] tracking-wider text-white/25 uppercase">
-          tip: tap coordinates or distance to inspect telemetry
+          psst — tap the distance for something hidden
         </p>
       </div>
 
@@ -380,10 +380,10 @@ export function SignalMap() {
             className="mt-4 text-center"
           >
             <p className="font-mono text-[11px] tracking-[0.2em] text-crimson uppercase font-bold">
-              SIGNAL RECEIVED IN {PEOPLE.recipient.city} // {PEOPLE.recipient.name}
+              it reached {PEOPLE.recipient.name}
             </p>
             <p className="font-mono text-[9px] tracking-wider text-white/40 mt-0.5">
-              traversed across {DISTANCE_KM.toLocaleString()} km in zero heart-lag
+              all {DISTANCE_KM.toLocaleString()} km of it, instantly
             </p>
           </motion.div>
         )}

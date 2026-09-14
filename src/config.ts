@@ -148,9 +148,46 @@ export const TREAT = {
 }
 
 export const COPY = {
-  teaser: `Locked until Sept 16, 00:00 WIB. Signal active across ~${DISTANCE_KM.toLocaleString()} km.`,
-  bootEyebrow: 'incoming transmission',
+  teaser: `It opens at midnight on the 16th, your time. I'm ${DISTANCE_KM.toLocaleString()} km away and counting every second of it.`,
+  bootEyebrow: 'something for you',
   bootTitle: 'FOR YOU',
-  bootSub: 'Every bit of it. Sound on.',
-  bootCta: 'Initialize Signal',
+  bootSub: 'Every bit of it. Turn your sound on.',
+  bootCta: 'Open it',
+  lockedChip: 'not yet',
+  clockChecked: 'clock checked',
+  clockLocal: 'your clock',
 }
+
+/** The first thing she reads after the hero — so the scroll opens on words. */
+export const OPENING_NOTE = {
+  eyebrow: 'before anything else',
+  lines: [
+    "It's your birthday.",
+    "I could not be there to say it out loud,",
+    'so I built somewhere to say it properly.',
+  ],
+  body: "Take your time with this. There's no rush, nothing to answer, and every part of it is yours to open whenever you feel like it.",
+}
+
+/**
+ * The long warm list. This is the heart of the page — add as many as you want,
+ * they render as a numbered run of lines. Keep each one short and specific;
+ * specifics are what make someone believe you.
+ */
+export const REASONS = [
+  "You say my name like it is a whole sentence.",
+  'You send me things at 2am with no context and I always understand.',
+  'You get excited about small things and it is genuinely the best thing about you.',
+  "You never once made me feel like too much.",
+  'You remember what I said weeks ago and bring it back like it mattered.',
+  'You laugh before the end of your own jokes.',
+  'You are kinder to strangers than you have to be.',
+  'You make a bad day survivable from 5,000 km away.',
+  'You are the first thing I want to tell anything to.',
+]
+
+/** Big lines that break up the scroll between sections. */
+export const PULL_QUOTES = [
+  'There are 5,000 km and one and a half hours between us, and none of it has ever felt like distance.',
+  'You are the loudest quiet thing in my life.',
+]

@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
-import { PEOPLE } from '../config'
+import { PEOPLE, PULL_QUOTES } from '../config'
 import { InteractiveCake } from './InteractiveCake'
+import { OpeningNote } from './OpeningNote'
+import { PhotoStrip } from './PhotoStrip'
+import { PullQuote } from './PullQuote'
 import { LoveFrequencyTuner } from './LoveFrequencyTuner'
 import { OpenWhenVault } from './OpenWhenVault'
 import { RedWaveCanvas } from './RedWaveCanvas'
@@ -21,21 +24,27 @@ export function UnlockedExperience() {
 
       <div className="relative z-10">
         <VisualizerHero />
+        {/* words immediately after the hero, so the first scroll isn't a void */}
+        <OpeningNote />
         <SignalMap />
+        <PullQuote>{PULL_QUOTES[0]}</PullQuote>
+        <PhotoStrip />
         <InteractiveCake />
         <LoveFrequencyTuner />
+        <PullQuote>{PULL_QUOTES[1]}</PullQuote>
         <OpenWhenVault />
 
         <footer className="mx-auto w-full max-w-lg px-5 pt-6 pb-16 text-center">
           <div className="mx-auto mb-6 h-px w-24 bg-gradient-to-r from-transparent via-crimson/50 to-transparent" />
-          <p className="flex items-center justify-center gap-2 font-mono text-[10px] tracking-[0.28em] text-white/40 uppercase">
-            built from {PEOPLE.sender.city.toLowerCase()}
-            <Heart size={10} className="text-crimson" fill="currentColor" />
-            for {PEOPLE.recipient.city.toLowerCase()}
+          <p className="font-display text-[17px] leading-relaxed text-white/70">
+            Happy birthday, {PEOPLE.recipient.name}.
           </p>
-          <p className="mt-3 font-mono text-[9px] tracking-[0.2em] text-white/20 uppercase">
-            16 . 09 . 2026 — signal remains open forever
+          <p className="mt-2 flex items-center justify-center gap-1.5 text-[13px] text-white/35">
+            made in {PEOPLE.sender.city.toLowerCase()}
+            <Heart size={11} className="text-rose" fill="currentColor" />
+            for you in {PEOPLE.recipient.city.toLowerCase()}
           </p>
+          <p className="mono-label mt-5 text-white/20">16 . 09 . 2026</p>
         </footer>
       </div>
     </motion.main>

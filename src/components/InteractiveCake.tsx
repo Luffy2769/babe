@@ -177,7 +177,7 @@ export function InteractiveCake() {
     <section className="mx-auto w-full max-w-lg px-5 py-16">
       <SectionHeading
         index="02"
-        eyebrow="ritual"
+        eyebrow="the cake"
         title="Make a wish."
         sub="Blow into your mic to extinguish the candles — or tap them if you're in public."
       />
@@ -413,7 +413,7 @@ export function InteractiveCake() {
               }`}
             >
               <Sparkles size={12} />
-              {sparklerMode ? 'Sparkler On' : 'Sparkler Mode'}
+              {sparklerMode ? 'sparklers on' : 'add sparklers'}
             </button>
           )}
         </div>
@@ -427,7 +427,7 @@ export function InteractiveCake() {
               ? 'mic blocked — blow them out by tapping here'
               : state === 'unsupported'
                 ? 'no mic on this device — tap here instead'
-                : 'or simply tap the cake to blow'}
+                : 'or just tap the cake'}
           </button>
         )}
 

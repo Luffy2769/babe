@@ -172,7 +172,7 @@ export function VisualizerHero() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="hud-label mb-2 text-crimson/80"
           >
-            signal unlocked
+            it's finally today
           </motion.p>
 
           <motion.h1
@@ -209,7 +209,7 @@ export function VisualizerHero() {
 
       <KineticLyrics />
 
-      {/* scroll affordance */}
+      {/* keep going affordance */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -217,7 +217,7 @@ export function VisualizerHero() {
         className="absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
       >
         <span className="font-mono text-[9px] tracking-[0.3em] text-white/25 uppercase">
-          scroll
+          keep going
         </span>
         <motion.span
           className="h-8 w-px bg-gradient-to-b from-crimson to-transparent"
