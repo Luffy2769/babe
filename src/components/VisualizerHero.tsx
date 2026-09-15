@@ -69,8 +69,8 @@ function SpectrumRing() {
         const y2 = cy + Math.sin(angle) * (radius + len)
 
         const g = ctx.createLinearGradient(x1, y1, x2, y2)
-        g.addColorStop(0, `rgba(255, 26, 26, ${0.35 + v * 0.65})`)
-        g.addColorStop(1, `rgba(255, 200, 90, ${v * 0.9})`)
+        g.addColorStop(0, `rgba(14, 165, 233, ${0.35 + v * 0.65})`)
+        g.addColorStop(1, `rgba(0, 240, 255, ${v * 0.95})`)
 
         ctx.beginPath()
         ctx.strokeStyle = g
@@ -85,15 +85,15 @@ function SpectrumRing() {
       const avg = energy / BARS
       ctx.beginPath()
       ctx.arc(cx, cy, radius - 6, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(255, 45, 85, ${0.25 + avg * 0.55})`
+      ctx.strokeStyle = `rgba(56, 189, 248, ${0.3 + avg * 0.55})`
       ctx.lineWidth = 1
       ctx.stroke()
 
       ctx.beginPath()
       ctx.arc(cx, cy, radius * (0.62 + avg * 0.22), 0, Math.PI * 2)
       const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius)
-      core.addColorStop(0, `rgba(255, 26, 26, ${0.16 + avg * 0.3})`)
-      core.addColorStop(1, 'rgba(255, 26, 26, 0)')
+      core.addColorStop(0, `rgba(14, 165, 233, ${0.18 + avg * 0.3})`)
+      core.addColorStop(1, 'rgba(14, 165, 233, 0)')
       ctx.fillStyle = core
       ctx.fill()
 

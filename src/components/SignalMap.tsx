@@ -62,7 +62,7 @@ function Node({
   pulsing: boolean
   onClick?: () => void
 }) {
-  const color = accent ? '#ff1a1a' : '#ffffff'
+  const color = accent ? '#38bdf8' : '#ffffff'
   return (
     <g onClick={onClick} className="cursor-pointer group">
       {pulsing && (
@@ -92,7 +92,7 @@ function Node({
         x={x}
         y={y + 22}
         textAnchor="middle"
-        fill={accent ? '#ff6b7a' : 'rgba(255,255,255,0.85)'}
+        fill={accent ? '#7dd3fc' : 'rgba(255,255,255,0.85)'}
         fontSize={9}
         letterSpacing={2}
         fontFamily="JetBrains Mono, monospace"
@@ -196,13 +196,13 @@ export function SignalMap() {
           <defs>
             <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#ffffff" stopOpacity="0.25" />
-              <stop offset="55%" stopColor="#ff2d55" stopOpacity="0.65" />
-              <stop offset="100%" stopColor="#ff1a1a" stopOpacity="0.95" />
+              <stop offset="55%" stopColor="#0ea5e9" stopOpacity="0.75" />
+              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0.95" />
             </linearGradient>
             <radialGradient id="packetGlow">
               <stop offset="0%" stopColor="#fff" stopOpacity="1" />
-              <stop offset="35%" stopColor="#ff2d55" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#ff1a1a" stopOpacity="0" />
+              <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
             </radialGradient>
             <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
               <path
@@ -222,7 +222,7 @@ export function SignalMap() {
             y1={project(0, 0).y}
             x2={VB.w}
             y2={project(0, 0).y}
-            stroke="rgba(255,26,26,0.2)"
+            stroke="rgba(56,189,248,0.25)"
             strokeWidth="0.7"
             strokeDasharray="4 5"
           />
@@ -238,7 +238,7 @@ export function SignalMap() {
           </text>
 
           {/* Underglow + trajectory path */}
-          <path d={CURVE} fill="none" stroke="#ff1a1a" strokeWidth="6" opacity="0.12" />
+          <path d={CURVE} fill="none" stroke="#38bdf8" strokeWidth="6" opacity="0.16" />
           <path
             ref={pathRef}
             d={CURVE}

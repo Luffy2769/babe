@@ -1,17 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Copy, Heart, Headphones, MailOpen, RotateCw, Sparkles, Ticket, Truck } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import { LETTER, TREAT } from '../config'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { buzz, wishBurst } from '../lib/celebrate'
-import { playChime, playClick, playSparkle } from '../lib/sfx'
+import { playChime, playClick, playSparkle, startRainAmbience, stopRainAmbience } from '../lib/sfx'
 import { MemoryCarousel } from './MemoryCarousel'
 import { VoiceNotePlayer } from './VoiceNotePlayer'
 import { Modal } from './ui/Modal'
 import { NeonButton } from './ui/NeonButton'
 import { SectionHeading } from './ui/SectionHeading'
 
-type CardId = 'now' | 'miss' | 'hear' | 'reasons' | 'treat'
+type CardId = 'now' | 'badday' | 'sleep' | 'fight' | 'hype' | 'miss' | 'hear' | 'reasons' | 'treat'
 
 const CARDS: {
   id: CardId
@@ -26,6 +26,34 @@ const CARDS: {
     hint: 'A letter I have been writing in my head for weeks.',
     icon: <MailOpen size={18} />,
     eyebrow: 'the letter',
+  },
+  {
+    id: 'badday',
+    title: 'Open On a Bad Day',
+    hint: 'When everything is heavy. Breathe with me.',
+    icon: <Heart size={18} />,
+    eyebrow: 'grounding & comfort',
+  },
+  {
+    id: 'sleep',
+    title: "Open When You Can't Sleep",
+    hint: 'At 3:00 AM under the ceiling fan. Turn on the rain.',
+    icon: <Sparkles size={18} />,
+    eyebrow: 'midnight lullaby',
+  },
+  {
+    id: 'fight',
+    title: 'Open When We Disagree',
+    hint: 'A reminder that it is always you & me vs. the world.',
+    icon: <RotateCw size={18} />,
+    eyebrow: 'safe harbor',
+  },
+  {
+    id: 'hype',
+    title: 'Open When You Doubt Yourself',
+    hint: 'Your personal cheerleader reminder of who you are.',
+    icon: <Sparkles size={18} />,
+    eyebrow: 'the hype letter',
   },
   {
     id: 'miss',
@@ -66,7 +94,7 @@ const REASONS = [
   'The way you make ordinary Tuesdays feel like milestones worth holding onto.',
   'How you celebrate my tiny victories like they are world championships.',
   'Because you live in my future (UTC+7) and you make tomorrow feel safe.',
-  'The stillness of being on call with you at 3am when neither of us has to speak.',
+  'The comfort of listening to your voice notes with headphones when the world is quiet.',
   'How fiercely kind, gentle, and understanding you are to everyone in your orbit.',
   'Because no matter how chaotic the world gets, you are my anchor.',
   'Simply because you exist — and that was always more than enough.',
@@ -93,6 +121,183 @@ function LetterBody() {
         <p className="neon-text mt-1 font-display text-lg">{LETTER.signature}</p>
       </div>
     </article>
+  )
+}
+
+/** Open On a Bad Day — Interactive 4-7-8 Breathing & Comfort */
+function BadDayBody() {
+  const [phase, setPhase] = useState<'Inhale' | 'Hold' | 'Exhale'>('Inhale')
+  const [seconds, setSeconds] = useState(4)
+
+  useEffect(() => {
+    let timer: number
+    const cycle = () => {
+      setPhase('Inhale')
+      setSeconds(4)
+      timer = window.setTimeout(() => {
+        setPhase('Hold')
+        setSeconds(7)
+        timer = window.setTimeout(() => {
+          setPhase('Exhale')
+          setSeconds(8)
+          timer = window.setTimeout(cycle, 8000)
+        }, 7000)
+      }, 4000)
+    }
+    cycle()
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  return (
+    <div className="space-y-6">
+      {/* Interactive Calming Breathing Orb */}
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center">
+        <motion.div
+          animate={{
+            scale: phase === 'Inhale' ? 1.35 : phase === 'Hold' ? 1.35 : 0.85,
+            opacity: phase === 'Exhale' ? 0.6 : 1,
+          }}
+          transition={{
+            duration: phase === 'Inhale' ? 4 : phase === 'Hold' ? 0.5 : 8,
+            ease: 'easeInOut',
+          }}
+          className="flex h-28 w-28 items-center justify-center rounded-full border border-rose/50 bg-gradient-to-br from-rose/30 to-purple-600/30 shadow-[0_0_35px_rgba(255,143,163,0.3)]"
+        >
+          <div className="text-center">
+            <p className="font-display text-sm font-semibold tracking-wide text-white">{phase}</p>
+            <p className="text-[10px] text-white/60">{seconds}s • breathe with me</p>
+          </div>
+        </motion.div>
+        <p className="mt-4 text-[12.5px] text-white/50">
+          Inhale peace (4s) • Hold calmness (7s) • Release the heaviness (8s)
+        </p>
+      </div>
+
+      <div className="space-y-3.5 text-[14.5px] leading-relaxed text-white/75">
+        <p>
+          First: put your shoulders down away from your ears, unclench your jaw, and take a sip of water.
+        </p>
+        <p>
+          Whatever went wrong today does not define you, and it does not get to rob you of tomorrow. You are allowed to be tired. You are allowed to have bad days where the only thing you accomplish is getting through it.
+        </p>
+        <p>
+          I am 5,000 km away right now, but you are not doing this alone. I am in your corner, always.
+        </p>
+        <p className="pt-2 text-rose font-display text-[15px]">
+          — You're safe with me.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/** Open When You Can't Sleep — Soothing Rain Generator & Lullaby */
+function CantSleepBody() {
+  const [isPlayingRain, setIsPlayingRain] = useState(false)
+
+  const toggleRain = () => {
+    if (isPlayingRain) {
+      stopRainAmbience()
+      setIsPlayingRain(false)
+    } else {
+      const ok = startRainAmbience()
+      if (ok) setIsPlayingRain(true)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      stopRainAmbience()
+    }
+  }, [])
+
+  return (
+    <div className="space-y-6">
+      {/* Rain Audio Sound Toggle */}
+      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose/10 text-rose">
+            <Sparkles size={18} />
+          </div>
+          <div>
+            <p className="font-display text-[13.5px] font-semibold text-white/90">Midnight Rain Ambience</p>
+            <p className="text-[11px] text-white/45">Gentle procedural rain sound</p>
+          </div>
+        </div>
+
+        <button
+          onClick={toggleRain}
+          className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-medium transition-all cursor-pointer ${
+            isPlayingRain
+              ? 'bg-rose text-black shadow-lg shadow-rose/25 font-semibold'
+              : 'border border-white/15 bg-white/5 text-white hover:bg-white/10'
+          }`}
+        >
+          {isPlayingRain ? 'Pause Rain' : 'Play Rain 🌧️'}
+        </button>
+      </div>
+
+      <div className="space-y-3.5 text-[14.5px] leading-relaxed text-white/70">
+        <p>
+          It is 3:00 AM, the room is quiet, and your mind is probably replaying twenty different things at once.
+        </p>
+        <p>
+          Close your eyes. Pull the blanket up to your chin. Think about the voice notes we send each other, and how we look up at the exact same sky. Think about the day we will finally meet in person, with no screens and no time difference.
+        </p>
+        <p>
+          Tomorrow can wait until you wake up. For right now, you are safe, you are loved, and you are mine.
+        </p>
+        <p className="pt-2 italic text-white/50 text-[13.5px]">
+          Sweet dreams, Sayang.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/** Open When We Had a Disagreement */
+function DisagreementBody() {
+  return (
+    <div className="space-y-4 text-[14.5px] leading-relaxed text-white/75">
+      <p className="font-display text-base font-semibold text-white/95">
+        Before you read anything else:
+      </p>
+      <p>
+        I love you. Nothing we disagree on changes that. Not even for a second.
+      </p>
+      <p>
+        Distance makes misunderstandings feel bigger than they are because we cannot see each other's faces or reach across the table to hold hands. But please remember:
+      </p>
+      <div className="rounded-2xl border border-rose/30 bg-rose/10 p-4 font-display text-rose text-[15px] font-medium text-center">
+        It is always you & me vs. the problem. Never you vs. me.
+      </div>
+      <p>
+        If I was clumsy with my words or made you feel unheard, I am so sorry. Take all the time and space you need, and when you are ready, I am right here waiting to listen.
+      </p>
+    </div>
+  )
+}
+
+/** Open When You Doubt Yourself — The Hype Letter */
+function HypeBody() {
+  return (
+    <div className="space-y-4 text-[14.5px] leading-relaxed text-white/75">
+      <p className="font-display text-base font-semibold text-gold">
+        A quick reminder of who you actually are:
+      </p>
+      <p>
+        You are intelligent, deeply resilient, and remarkably capable. You have walked through days that tested you to your limit and you came out with grace every single time.
+      </p>
+      <p>
+        Do not let imposter syndrome or a bad day convince you that you are anything less than extraordinary. You have this quiet brilliance that commands respect without ever having to shout.
+      </p>
+      <p>
+        Walk into every room like you belong there — because you do. And if you ever forget, come back here and let me remind you.
+      </p>
+      <p className="pt-2 text-rose font-display text-[15px] font-medium">
+        — Your biggest fan in the world.
+      </p>
+    </div>
   )
 }
 
@@ -341,6 +546,10 @@ export function OpenWhenVault() {
         title={card?.title}
       >
         {active === 'now' && <LetterBody />}
+        {active === 'badday' && <BadDayBody />}
+        {active === 'sleep' && <CantSleepBody />}
+        {active === 'fight' && <DisagreementBody />}
+        {active === 'hype' && <HypeBody />}
         {active === 'miss' && <MemoryCarousel />}
         {active === 'hear' && (
           <div className="space-y-4">

@@ -222,9 +222,9 @@ export function InteractiveCake() {
               <stop offset="100%" stopColor="#0e0e13" />
             </linearGradient>
             <linearGradient id="icing" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#ff1a1a" />
-              <stop offset="50%" stopColor="#ff2d55" />
-              <stop offset="100%" stopColor="#ff6b3d" />
+              <stop offset="0%" stopColor="#0284c7" />
+              <stop offset="50%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#00f0ff" />
             </linearGradient>
           </defs>
 
@@ -352,7 +352,7 @@ export function InteractiveCake() {
             rx={112}
             ry={9}
             fill="none"
-            stroke="rgba(255,26,26,0.28)"
+            stroke="rgba(56,189,248,0.35)"
             strokeWidth={0.8}
           />
         </svg>

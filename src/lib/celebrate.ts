@@ -1,15 +1,15 @@
 import confetti from 'canvas-confetti'
 
-const CRIMSON = ['#ff1a1a', '#ff2d55', '#ff6b3d', '#ffc93c', '#ffffff']
+const SKY_BLUE = ['#38bdf8', '#0ea5e9', '#7dd3fc', '#0284c7', '#00f0ff', '#ffffff']
 
-/** Fullscreen crimson-and-gold burst for the midnight rollover. */
+/** Fullscreen sky-blue-and-starlight burst for the midnight rollover. */
 export function midnightBurst() {
   const end = Date.now() + 2600
 
   // Opening slam from both bottom corners.
   const wings = (particleRatio: number, opts: confetti.Options) => {
     void confetti({
-      colors: CRIMSON,
+      colors: SKY_BLUE,
       disableForReducedMotion: true,
       particleCount: Math.floor(220 * particleRatio),
       ...opts,
@@ -26,7 +26,7 @@ export function midnightBurst() {
   const drift = () => {
     if (Date.now() > end) return
     void confetti({
-      colors: CRIMSON,
+      colors: SKY_BLUE,
       disableForReducedMotion: true,
       particleCount: 3,
       angle: 60,
@@ -34,7 +34,7 @@ export function midnightBurst() {
       origin: { x: 0, y: 0.65 },
     })
     void confetti({
-      colors: CRIMSON,
+      colors: SKY_BLUE,
       disableForReducedMotion: true,
       particleCount: 3,
       angle: 120,
@@ -49,7 +49,7 @@ export function midnightBurst() {
 /** Smaller pop used when the candles go out. */
 export function wishBurst() {
   void confetti({
-    colors: CRIMSON,
+    colors: SKY_BLUE,
     disableForReducedMotion: true,
     particleCount: 90,
     spread: 78,

@@ -35,7 +35,8 @@ export const PEOPLE = {
   },
   /** Her. */
   recipient: {
-    name: 'Sayang', // ← her name / nickname
+    name: 'Nana', // ← her name
+    nickname: 'Sayang',
     label: 'HER TIME',
     // Central Kalimantan runs on WIB (UTC+7), same as Jakarta. Asia/Pontianak
     // is the IANA zone that actually covers it.
@@ -71,7 +72,7 @@ export const AUDIO = {
   artist: 'for her',
   /** Drop your recording here: public/audio/voice-note.mp3 */
   voiceNote: asset('/audio/voice-note.mp3'),
-  voiceNoteTitle: 'a voice note, recorded at 2am',
+  voiceNoteTitle: 'your voice notes, on repeat',
 }
 
 /**
@@ -83,20 +84,20 @@ export const LYRICS: { t: number; text: string; accent?: boolean }[] = [
   { t: 0, text: 'signal acquired' },
   { t: 6, text: 'across five thousand kilometres of ocean' },
   { t: 14, text: 'the clock finally agreed with me' },
-  { t: 22, text: 'happy birthday', accent: true },
+  { t: 22, text: 'happy birthday nana', accent: true },
   { t: 30, text: 'you are the loudest quiet thing in my life' },
   { t: 40, text: 'every timezone bends for you' },
-  { t: 50, text: 'stay exactly like this', accent: true },
+  { t: 50, text: 'me blue, you blue, always matching', accent: true },
 ]
 
 /** Card 1 — the letter. Each string is a paragraph. */
 export const LETTER = {
-  greeting: 'Hey you,',
+  greeting: 'Hey Nana,',
   paragraphs: [
     "It's past midnight where you are, which means I've been watching a countdown for weeks just to be the first thing that reaches you today. I built this instead of sleeping. That feels about right.",
-    "There's an hour and a half between our clocks and a whole ocean under the flight path, and somehow none of it has ever felt like distance. You text me good morning while I'm still in yesterday. I've gotten used to living slightly behind you, always catching up to something wonderful.",
+    "There's an hour and a half between our clocks and a whole ocean under the flight path. We've never met in person yet, never had long calls — just a few precious voice notes of yours that I secretly play on repeat, matching pfps on every app we talk on, and texts that make my entire day. And somehow, none of it has ever felt like distance. You text me good morning while I'm still in yesterday. I've gotten used to living slightly behind you, always catching up to something wonderful.",
     "I want you to know what you actually are: you're the person who makes ordinary days feel like they're worth reporting. You make me want to be less careless with myself. You laugh at the parts of me I was planning to apologise for.",
-    'So here is the whole year, wished at once — I hope it is soft where you need it to be, loud where you want it to be, and that you never once have to be brave alone.',
+    "So here is the whole year, wished at once — I hope it is soft where you need it to be, bright where you want it to be, and that you never once have to be brave alone.",
   ],
   signoff: 'All of it, always,',
   signature: '— yours',
@@ -104,30 +105,28 @@ export const LETTER = {
 
 /**
  * Card 2 — memory carousel.
- * Drop images into public/images/memories/ and point `src` at them.
- * A missing file degrades gracefully into a neon placeholder, so you can ship
- * this before you've picked the photos.
+ * Matching PFP screenshots & moments.
  */
 export const MEMORIES: { src: string; caption: string; date?: string }[] = [
   {
     src: asset('/images/memories/01.jpg'),
-    caption: 'The first call that ran until the sun came up on your side.',
-    date: 'somewhere in the beginning',
+    caption: 'The drawing of you threatening me with a knife while I tremble. Accurate representation of our dynamic.',
+    date: 'our daily dynamic',
   },
   {
     src: asset('/images/memories/02.jpg'),
-    caption: 'You, mid-sentence, about something you love. My favourite genre.',
-    date: 'a tuesday',
+    caption: 'Minecraft cherry blossom date with LuciaNana2609 standing by my side in front of our giant heart.',
+    date: 'minecraft world',
   },
   {
     src: asset('/images/memories/03.jpg'),
-    caption: "The screenshot I've never deleted.",
-    date: 'still saved',
+    caption: '"I LOVE MY PRINCESS (NURUL) ❤️" — written down and meant with every single piece of my heart.',
+    date: 'for my princess',
   },
   {
     src: asset('/images/memories/04.jpg'),
-    caption: 'Proof that 5,000 km is a rounding error.',
-    date: 'today',
+    caption: 'Our official Roblox wedding: Luffy paired with the prettiest bride in the game.',
+    date: 'roblox wedding',
   },
 ]
 
@@ -136,12 +135,12 @@ export const TREAT = {
   code: 'BLOODPOP-16',
   headline: 'One (1) unreasonably good day, prepaid.',
   description:
-    'Redeemable against: dessert of your choosing, delivered to your door, plus a movie night where you pick and I do not complain once.',
+    'Redeemable against: dessert of your choosing, delivered to your door in Sampit, plus a movie night where you pick and I do not complain once.',
   /** Fake-but-fun tracker steps shown as a delivery timeline. */
   steps: [
-    { label: 'Order placed', detail: 'from 5,000 km away', done: true },
+    { label: 'Order placed', detail: 'from 5,000 km away in Mumbai', done: true },
     { label: 'Wrapped', detail: 'badly, with love', done: true },
-    { label: 'In transit', detail: 'crossing the Java Sea', done: true },
+    { label: 'In transit', detail: 'crossing the Java Sea to Sampit', done: true },
     { label: 'Out for delivery', detail: 'arriving on your birthday', done: false },
   ],
   fineprint: 'No expiry. Non-transferable. Infinitely re-redeemable in practice.',
@@ -150,8 +149,8 @@ export const TREAT = {
 export const COPY = {
   teaser: `It opens at midnight on the 16th, your time. I'm ${DISTANCE_KM.toLocaleString()} km away and counting every second of it.`,
   bootEyebrow: 'something for you',
-  bootTitle: 'FOR YOU',
-  bootSub: 'Every bit of it. Turn your sound on.',
+  bootTitle: 'FOR NANA',
+  bootSub: 'Every bit of it. In your favorite blue.',
   bootCta: 'Open it',
   lockedChip: 'not yet',
   clockChecked: 'clock checked',
@@ -162,9 +161,9 @@ export const COPY = {
 export const OPENING_NOTE = {
   eyebrow: 'before anything else',
   lines: [
-    "It's your birthday.",
+    "It's your birthday, Nana.",
     "I could not be there to say it out loud,",
-    'so I built somewhere to say it properly.',
+    'so I built somewhere in sky blue to say it properly.',
   ],
   body: "Take your time with this. There's no rush, nothing to answer, and every part of it is yours to open whenever you feel like it.",
 }
@@ -175,15 +174,15 @@ export const OPENING_NOTE = {
  * specifics are what make someone believe you.
  */
 export const REASONS = [
-  "You say my name like it is a whole sentence.",
-  'You send me things at 2am with no context and I always understand.',
-  'You get excited about small things and it is genuinely the best thing about you.',
-  "You never once made me feel like too much.",
+  "How we have matching pfps on literally every single app we talk on.",
+  'The few voice notes of yours that I secretly save and replay with headphones.',
+  'You saying "me blue" when we pick our matching icons.',
+  "Spending an entire hour on Discord just to agree on our first matching pfp.",
+  'You send me stickers and memes with no context and I always understand.',
+  'How your "good morning" text makes 5,000 km feel like next door.',
   'You remember what I said weeks ago and bring it back like it mattered.',
-  'You laugh before the end of your own jokes.',
-  'You are kinder to strangers than you have to be.',
-  'You make a bad day survivable from 5,000 km away.',
-  'You are the first thing I want to tell anything to.',
+  'Even though we haven’t met in person yet, you are my home.',
+  'You are the first person I want to tell everything to.',
 ]
 
 /** Big lines that break up the scroll between sections. */

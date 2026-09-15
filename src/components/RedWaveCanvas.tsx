@@ -82,16 +82,16 @@ export function RedWaveCanvas({ heightRatio = 0.42, className = '', density = 1 
           ctx.arc(x0, y, r, 0, Math.PI * 2)
           ctx.fillStyle =
             crest > 0.72
-              ? `rgba(255, 90, 110, ${alpha * 1.25})`
-              : `rgba(255, 26, 26, ${alpha})`
+              ? `rgba(0, 240, 255, ${alpha * 1.3})`
+              : `rgba(56, 189, 248, ${alpha})`
           ctx.fill()
         }
       }
 
-      // A soft crimson horizon glow welded to the bottom edge.
+      // A soft sky blue horizon glow welded to the bottom edge.
       const grad = ctx.createLinearGradient(0, h * 0.55, 0, h)
-      grad.addColorStop(0, 'rgba(255, 26, 26, 0)')
-      grad.addColorStop(1, 'rgba(255, 26, 26, 0.13)')
+      grad.addColorStop(0, 'rgba(14, 165, 233, 0)')
+      grad.addColorStop(1, 'rgba(14, 165, 233, 0.16)')
       ctx.fillStyle = grad
       ctx.fillRect(0, h * 0.55, w, h * 0.45)
       ctx.globalCompositeOperation = 'source-over'

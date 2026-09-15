@@ -207,3 +207,154 @@ export function playTunerBlip(pitch = 440) {
   osc.start(now)
   osc.stop(now + 0.06)
 }
+
+/** Bubble/capsule pop sound effect */
+export function playPop() {
+  const ctx = getSafeContext()
+  if (!ctx) return
+
+  const now = ctx.currentTime
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+
+  osc.type = 'sine'
+  osc.frequency.setValueAtTime(450, now)
+  osc.frequency.exponentialRampToValueAtTime(900, now + 0.08)
+
+  gain.gain.setValueAtTime(0.12, now)
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09)
+
+  osc.connect(gain)
+  gain.connect(ctx.destination)
+
+  osc.start(now)
+  osc.stop(now + 0.1)
+}
+
+/** Tactile foil scratch sound */
+export function playScratch() {
+  const ctx = getSafeContext()
+  if (!ctx) return
+
+  const bufferSize = ctx.sampleRate * 0.05
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * 0.6
+  }
+
+  const noise = ctx.createBufferSource()
+  noise.buffer = buffer
+
+  const filter = ctx.createBiquadFilter()
+  filter.type = 'bandpass'
+  filter.frequency.value = 1800 + Math.random() * 1200
+  filter.Q.value = 2
+
+  const gain = ctx.createGain()
+  gain.gain.setValueAtTime(0.04, ctx.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05)
+
+  noise.connect(filter)
+  filter.connect(gain)
+  gain.connect(ctx.destination)
+
+  noise.start()
+  noise.stop(ctx.currentTime + 0.06)
+}
+
+/** Rich harp / celestial chord */
+export function playHarpChord() {
+  const ctx = getSafeContext()
+  if (!ctx) return
+
+  const now = ctx.currentTime
+  const notes = [261.63, 329.63, 392.0, 523.25, 659.25, 783.99, 1046.5] // C major arpeggio
+  notes.forEach((freq, idx) => {
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+
+    osc.type = 'triangle'
+    osc.frequency.setValueAtTime(freq, now + idx * 0.04)
+
+    gain.gain.setValueAtTime(0, now + idx * 0.04)
+    gain.gain.linearRampToValueAtTime(0.07, now + idx * 0.04 + 0.015)
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.04 + 1.6)
+
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+
+    osc.start(now + idx * 0.04)
+    osc.stop(now + idx * 0.04 + 1.7)
+  })
+}
+
+let rainNode: AudioNode | null = null
+let rainGain: GainNode | null = null
+
+/** Soothing procedural night rain generator */
+export function startRainAmbience(): boolean {
+  const ctx = getSafeContext()
+  if (!ctx) return false
+
+  stopRainAmbience()
+
+  // Generate pinkish / filtered noise
+  const bufferSize = ctx.sampleRate * 2
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
+  let b0 = 0, b1 = 0, b2 = 0
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1
+    b0 = 0.99886 * b0 + white * 0.0555179
+    b1 = 0.99332 * b1 + white * 0.0750759
+    b2 = 0.96900 * b2 + white * 0.1538520
+    data[i] = (b0 + b1 + b2 + white * 0.5362) * 0.1
+  }
+
+  const noise = ctx.createBufferSource()
+  noise.buffer = buffer
+  noise.loop = true
+
+  const filter = ctx.createBiquadFilter()
+  filter.type = 'lowpass'
+  filter.frequency.value = 950
+
+  const gain = ctx.createGain()
+  gain.gain.setValueAtTime(0.001, ctx.currentTime)
+  gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 1.2)
+
+  noise.connect(filter)
+  filter.connect(gain)
+  gain.connect(ctx.destination)
+
+  noise.start()
+  rainNode = noise
+  rainGain = gain
+  return true
+}
+
+export function stopRainAmbience() {
+  if (rainGain && rainNode) {
+    try {
+      const ctx = getSafeContext()
+      if (ctx) {
+        rainGain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.8)
+        setTimeout(() => {
+          try {
+            ;(rainNode as AudioBufferSourceNode).stop()
+          } catch {
+            /* stopped */
+          }
+          rainNode = null
+          rainGain = null
+        }, 850)
+        return
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+  rainNode = null
+  rainGain = null
+}

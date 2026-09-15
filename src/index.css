@@ -1,20 +1,23 @@
 @import 'tailwindcss';
 
 /* ────────────────────────────────────────────────────────────
-   Design tokens — dark obsidian ground, neon crimson accents.
+   Design tokens — deep midnight navy ground, radiant sky blue accents.
    ──────────────────────────────────────────────────────────── */
 @theme {
-  --color-obsidian: #0a0a0c;
-  --color-charcoal: #121216;
-  --color-crimson: #ff1a1a;
-  --color-blood: #ff2d55;
-  --color-ember: #ff6b3d;
-  --color-gold: #ffc93c;
-  /* the warm end of the range — keeps the page from reading as a warning light */
-  --color-rose: #ff8fa3;
-  --color-blush: #ffd0d8;
-  --color-plum: #2a1030;
-  --color-wine: #4a0f24;
+  --color-obsidian: #050a14;
+  --color-charcoal: #0b1528;
+  --color-crimson: #0284c7;
+  --color-blood: #0ea5e9;
+  --color-ember: #38bdf8;
+  --color-gold: #7dd3fc;
+  /* sky blue range */
+  --color-rose: #38bdf8;
+  --color-blush: #e0f2fe;
+  --color-plum: #0c1c38;
+  --color-wine: #07152b;
+  --color-sky: #38bdf8;
+  --color-cyan: #00f0ff;
+  --color-ice: #e0f2fe;
 
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -33,16 +36,16 @@
     transform: scaleY(1) translateX(0);
   }
   25% {
-    opacity: 0.82;
-    transform: scaleY(1.08) translateX(-0.4px);
+    opacity: 0.85;
+    transform: scaleY(1.06) translateX(-0.4px);
   }
   50% {
-    opacity: 0.95;
-    transform: scaleY(0.94) translateX(0.5px);
+    opacity: 0.96;
+    transform: scaleY(0.96) translateX(0.4px);
   }
   75% {
-    opacity: 0.78;
-    transform: scaleY(1.05) translateX(-0.3px);
+    opacity: 0.82;
+    transform: scaleY(1.04) translateX(-0.2px);
   }
 }
 @keyframes scan {
@@ -86,15 +89,15 @@
   body {
     margin: 0;
     background-color: var(--color-obsidian);
-    color: #e8e8ec;
+    color: #e2e8f0;
     font-family: var(--font-display);
     overflow-x: hidden;
-    /* keeps the ground from banding on OLED phones */
+    /* deep midnight sky ground with soft blue atmospheric glow */
     background-image:
-      radial-gradient(120% 80% at 50% -10%, rgba(255, 45, 85, 0.13), transparent 62%),
-      radial-gradient(80% 50% at 15% 35%, rgba(74, 15, 36, 0.35), transparent 60%),
-      radial-gradient(70% 45% at 88% 68%, rgba(42, 16, 48, 0.4), transparent 62%),
-      radial-gradient(90% 60% at 50% 110%, rgba(255, 143, 163, 0.08), transparent 60%);
+      radial-gradient(120% 80% at 50% -10%, rgba(14, 165, 233, 0.18), transparent 62%),
+      radial-gradient(80% 50% at 15% 35%, rgba(2, 132, 199, 0.14), transparent 60%),
+      radial-gradient(70% 45% at 88% 68%, rgba(56, 189, 248, 0.12), transparent 62%),
+      radial-gradient(90% 60% at 50% 110%, rgba(186, 230, 253, 0.08), transparent 60%);
     background-attachment: fixed;
   }
 
@@ -106,7 +109,7 @@
   }
 
   ::selection {
-    background: rgba(255, 26, 26, 0.35);
+    background: rgba(14, 165, 233, 0.35);
     color: #fff;
   }
 
@@ -118,7 +121,7 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 26, 26, 0.3);
+    background: rgba(56, 189, 248, 0.3);
     border-radius: 99px;
   }
 
@@ -142,12 +145,11 @@
   }
 
   .hud-label {
-    @apply font-display text-[11px] font-medium tracking-[0.18em] text-white/45 uppercase sm:text-[12px];
+    @apply font-display text-[11px] font-medium tracking-[0.18em] text-sky/70 uppercase sm:text-[12px];
   }
 
-  /* for the few places a readout genuinely suits the moment */
   .mono-label {
-    @apply font-mono text-[10px] tracking-[0.22em] text-white/35 uppercase;
+    @apply font-mono text-[10px] tracking-[0.22em] text-white/40 uppercase;
   }
 
   .serif-quote {
@@ -158,14 +160,14 @@
   .neon-text {
     color: #fff;
     text-shadow:
-      0 0 6px rgba(255, 45, 85, 0.8),
-      0 0 22px rgba(255, 45, 85, 0.42),
-      0 0 52px rgba(255, 143, 163, 0.3);
+      0 0 6px rgba(56, 189, 248, 0.85),
+      0 0 22px rgba(14, 165, 233, 0.55),
+      0 0 52px rgba(186, 230, 253, 0.4);
   }
 
-  /* warm glow for the softer headings */
+  /* sky blue warm glow for headings */
   .warm-text {
-    background: linear-gradient(120deg, #ffd0d8 0%, #ff8fa3 45%, #ffc93c 100%);
+    background: linear-gradient(120deg, #e0f2fe 0%, #38bdf8 50%, #00f0ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -173,16 +175,16 @@
 
   .neon-edge {
     box-shadow:
-      0 0 0 1px rgba(255, 26, 26, 0.35),
-      0 0 24px -4px rgba(255, 26, 26, 0.55),
-      inset 0 0 26px -14px rgba(255, 45, 85, 0.9);
+      0 0 0 1px rgba(56, 189, 248, 0.35),
+      0 0 24px -4px rgba(14, 165, 233, 0.55),
+      inset 0 0 26px -14px rgba(56, 189, 248, 0.9);
   }
 
-  /* holographic foil sheen for vouchers and special cards */
+  /* holographic foil sheen in sky blue and starlight */
   .holographic-card {
     position: relative;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 26, 26, 0.08) 50%, rgba(255, 201, 60, 0.07) 100%);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(14, 165, 233, 0.1) 50%, rgba(0, 240, 255, 0.08) 100%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   }
 
   .holographic-card::before {
@@ -194,9 +196,9 @@
       115deg,
       transparent 0%,
       rgba(255, 255, 255, 0.08) 30%,
-      rgba(255, 45, 85, 0.15) 45%,
-      rgba(255, 201, 60, 0.18) 50%,
-      rgba(0, 255, 255, 0.1) 55%,
+      rgba(56, 189, 248, 0.2) 45%,
+      rgba(0, 240, 255, 0.2) 50%,
+      rgba(224, 242, 254, 0.15) 55%,
       transparent 70%
     );
     background-size: 200% 200%;
@@ -216,14 +218,14 @@
     100% { background-position: 100% 100%; }
   }
 
-  /* the grain + scanline film that sits over the whole app */
+  /* grain + scanline film */
   .film-grain::after {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 60;
-    opacity: 0.05;
+    opacity: 0.04;
     background-image: repeating-linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.6) 0px,
@@ -247,8 +249,6 @@
   }
 }
 
-/* Respect the OS "reduce motion" switch — kills the ambient loops but keeps
-   the app fully usable. Framer Motion transitions are damped in code. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
